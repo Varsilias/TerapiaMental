@@ -1,20 +1,17 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from '../Screens/Home';
 import React from 'react';
-import SplashScreen from '../General/components/SplashScreen';
+import Intro from '../Screens/Intro';
+import Signup from '../Screens/Signup';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   return (
     <>
-      {true ? (
-        <SplashScreen />
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
-      )}
+      <Stack.Navigator screenOptions={{title: '', headerShown: false}}>
+        <Stack.Screen name="Intro" component={Intro} />
+        <Stack.Screen name="Signup" component={Signup} />
+      </Stack.Navigator>
     </>
   );
 };

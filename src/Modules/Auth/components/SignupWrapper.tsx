@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const Home = () => {
+const SignupWrapper = () => {
   return (
     <View>
-      <Text>Home</Text>
+      <Text>SignupWrapper</Text>
     </View>
   );
 };
 
-export default Home;
+export default SignupWrapper;
