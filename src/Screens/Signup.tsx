@@ -1,8 +1,6 @@
 import React from 'react';
-import SignupWrapper from '../Modules/Auth/components/SignupWrapper';
+import SignupComponent from '../Modules/Auth/components/Signup';
 
-const Signup = () => {
-  return <SignupWrapper />;
+export const Signup = () => {
+  return <SignupComponent />;
 };
-
-export default Signup;

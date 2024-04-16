@@ -71,7 +71,7 @@ const IntroWrapper = () => {
       <ScrollView style={styles.introContainer}>
         <View style={styles.skipActionsContainer}>
           {index === slides.length - 1 ? null : (
-            <TouchableOpacity onPress={onSkip}>
+            <TouchableOpacity onPress={onSkip} activeOpacity={0.7}>
               <Text style={styles.skipActions}>Skip</Text>
             </TouchableOpacity>
           )}
@@ -96,11 +96,15 @@ const IntroWrapper = () => {
           {!(index === slides.length - 1) ? (
             <TouchableOpacity
               style={styles.touchable}
-              onPress={() => onNext(index + 1)}>
+              onPress={() => onNext(index + 1)}
+              activeOpacity={0.7}>
               <Image source={require('../../../images/Arrow.png')} />
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={styles.button} onPress={handleNavigation}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleNavigation}
+              activeOpacity={0.7}>
               <Text style={styles.btn_text}>Sign Up</Text>
             </TouchableOpacity>
           )}
@@ -124,7 +128,6 @@ const IntroWrapper = () => {
 
 const styles = StyleSheet.create({
   introContainer: {
-    // backgroundColor: Colors.PRIMARY_BLACK,
     backgroundColor: Colors.WHITE,
     flex: 1,
     paddingTop: Platform.OS !== 'android' ? 40 : 0,
