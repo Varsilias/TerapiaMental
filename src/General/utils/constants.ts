@@ -3,9 +3,12 @@ export const Fonts = {
   BOLD: 'LexendDeca-Bold',
   REGULAR: 'LexendDeca-Regular',
   MEDIUM: 'LexendDeca-Medium',
+  BLACK: 'LexendDeca-Black',
   N_SEMI_BOLD: 'Nunito-SemiBold',
+  N_BOLD: 'Nunito-Bold',
   N_REGULAR: 'Nunito-Regular',
   N_BLACK: 'Nunito-Regular',
+  N_EXTRA_BOLD_ITALIC: 'Nunito-ExtraBoldItalic',
 };
 
 export const Colors = {
@@ -20,7 +23,9 @@ export const Colors = {
   INPUT_BORDER_GREY: '#D1D1D1',
   DANGER: '#d13d51',
   SUCCESS: '#27AE60',
+  T_LIGHT_GREY: '#7E7E7E',
 };
 
 export const ACCESS_TOKEN = 'TERAPIAMENTAL_ACCESS_TOKEN';
+export const REFRESH_TOKEN = 'TERAPIAMENTAL_REFRESH_TOKEN';
 export const USER = 'TERAPIAMENTAL_USER';

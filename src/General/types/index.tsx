@@ -1,1 +1,4 @@
-export interface IUser {}
+export interface IUser {
+  firstname: string;
+  lastname: string;
+}

@@ -18,11 +18,13 @@ import {StackNavigationType} from '../../../Navigation/types/navigation';
 import Toast from 'react-native-toast-message';
 import {useLogin} from '../hooks';
 import {handleError} from '../../../General/utils/helpers';
+import {useAuthContext} from '../../../General/context';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(true);
   const formikRef = useRef<FormikProps<any>>();
   const navigation = useNavigation<StackNavigationType>();
+  const {setToken, setRefreshToken, setUser} = useAuthContext();
 
   const initialValues = {
     email: '',
@@ -32,9 +34,23 @@ const Login = () => {
     onSuccess(res) {
       const data = res?.data;
       console.log(JSON.stringify(data, null, 2));
-      if (data) {
-        Toast.show({type: 'success', text1: 'Success', text2: data?.message});
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Error processig request',
+        });
       }
+
+      Toast.show({type: 'success', text1: 'Success', text2: data?.message});
+      const tokens = data?.data?.token;
+      const user = data?.data?.user;
+      setToken(tokens.access_token);
+      setRefreshToken(tokens.refresh_token);
+      setUser(user);
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 2000);
     },
     onError(error: any) {
       console.log(error);
