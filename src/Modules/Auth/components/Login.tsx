@@ -49,7 +49,7 @@ const Login = () => {
       setRefreshToken(tokens.refresh_token);
       setUser(user);
       setTimeout(() => {
-        navigation.navigate('Home');
+        navigation.navigate('tabs');
       }, 2000);
     },
     onError(error: any) {

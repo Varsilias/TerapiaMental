@@ -1,10 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import Home from '../Screens/Home';
 import TabBar from '../Modules/Home/components/TabBar';
 import Landing from '../Modules/Home/components/Landing';
 import Therapy from '../Modules/Therapy/components/Index';
 import Tools from '../Modules/Tools/components/Index';
+import Profile from '../Modules/Profile/components/Index';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +27,7 @@ export const TabNavigator = () => {
           component={Tools}
           options={{tabBarLabel: 'Tools', headerShown: true}}
         />
-        <Tab.Screen name="Profile" component={Home} />
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </>
   );

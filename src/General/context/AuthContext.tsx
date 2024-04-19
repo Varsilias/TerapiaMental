@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import {ACCESS_TOKEN, REFRESH_TOKEN, USER} from '../utils/constants';
 import {IUser} from '../types';
-import {storeData, getItemFor} from '../utils/storage';
+import {storeData, getItemFor, removeItemFor} from '../utils/storage';
 
 interface IAuthState {
   isAuthenticated: boolean;
@@ -18,6 +18,7 @@ interface IAuthState {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   refreshToken: string | undefined;
   setRefreshToken: React.Dispatch<React.SetStateAction<string | undefined>>;
+  logout: () => void;
 }
 
 export const AuthContext = createContext<IAuthState>({} as IAuthState);
@@ -55,6 +56,16 @@ export const AuthContextProvider = (props: PropsWithChildren) => {
     getItemFor(REFRESH_TOKEN).then(value => setRefreshToken(value));
   }, []);
 
+  const logout = () => {
+    removeItemFor(ACCESS_TOKEN);
+    removeItemFor(REFRESH_TOKEN);
+    removeItemFor(USER);
+    setToken(undefined);
+    setRefreshToken(undefined);
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -66,6 +77,7 @@ export const AuthContextProvider = (props: PropsWithChildren) => {
         setIsAuthenticated,
         refreshToken,
         setRefreshToken,
+        logout,
       }}>
       {children}
     </AuthContext.Provider>
@@ -84,6 +96,7 @@ export const useAuthContext = () => {
     token,
     refreshToken,
     setRefreshToken,
+    logout,
   } = authMetadata;
 
   return {
@@ -95,5 +108,6 @@ export const useAuthContext = () => {
     token,
     refreshToken,
     setRefreshToken,
+    logout,
   };
 };

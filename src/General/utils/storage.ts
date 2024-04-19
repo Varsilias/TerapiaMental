@@ -18,3 +18,11 @@ export const getItemFor = async (key: string) => {
     console.log('Error getting item' + error.message);
   }
 };
+
+export const removeItemFor = async (key: string) => {
+  try {
+    return await AsyncStorage.removeItem(key);
+  } catch (error: any) {
+    console.log('Error getting item' + error.message);
+  }
+};
