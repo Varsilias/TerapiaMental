@@ -2,8 +2,11 @@ import React from 'react';
 import WhyUsWrapper from './WhyUsWrapper';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Colors, Fonts} from '../../../General/utils/constants';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationType} from '../../../Navigation/types/navigation';
 
 const EasyBooking = () => {
+  const navigation = useNavigation<StackNavigationType>();
   return (
     <WhyUsWrapper>
       <View style={styles.container}>
@@ -20,7 +23,9 @@ const EasyBooking = () => {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('Browse Therapist');
+            }}
             activeOpacity={0.8}>
             <Text style={styles.btn_text}>Book Now</Text>
           </TouchableOpacity>

@@ -2,8 +2,12 @@ import React from 'react';
 import WhyUsWrapper from './WhyUsWrapper';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Colors, Fonts} from '../../../General/utils/constants';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationType} from '../../../Navigation/types/navigation';
 
 const TailoredTools = () => {
+  const navigation = useNavigation<StackNavigationType>();
+
   return (
     <WhyUsWrapper>
       <View style={styles.container}>
@@ -22,7 +26,9 @@ const TailoredTools = () => {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('Tools and Resources');
+            }}
             activeOpacity={0.8}>
             <Text style={styles.btn_text}>Explore Tools</Text>
           </TouchableOpacity>

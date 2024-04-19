@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, ScrollView, StyleSheet} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import Greeting from './Greeting';
 import QuoteSlider from './QuoteSlider';
 import Features from './Features';
@@ -11,13 +11,15 @@ const Landing = (props: any) => {
   console.log(JSON.stringify(props, null, 2));
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Greeting />
-      <QuoteSlider />
-      <Features />
-      <FeaturedTherapists />
-      <FeaturedStories />
-    </ScrollView>
+      <ScrollView>
+        <QuoteSlider />
+        <Features />
+        <FeaturedTherapists />
+        <FeaturedStories />
+      </ScrollView>
+    </View>
   );
 };
 
@@ -25,6 +27,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS !== 'android' ? 80 : 30,
     backgroundColor: Colors.WHITE,
+    paddingBottom: 50,
   },
 });
 

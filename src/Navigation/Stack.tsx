@@ -7,6 +7,8 @@ import EasyBooking from '../Modules/Home/components/EasyBooking';
 import SecureWallet from '../Modules/Home/components/SecureWallet';
 import TailoredTools from '../Modules/Home/components/TailoredTools';
 import RightTherapists from '../Modules/Home/components/RightTherapists';
+import {CommingSoon} from '../General/components/CommingSoon';
+import Stories from '../Modules/Home/components/Stories';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +58,23 @@ const StackNavigator = ({hasLaunched}: {hasLaunched: boolean}) => {
           options={{
             headerShown: true,
             title: 'Right Therapists',
+          }}
+        />
+        <Stack.Screen
+          name="CommingSoon"
+          component={CommingSoon}
+          options={{
+            headerShown: true,
+            title: 'Coming Soon',
+          }}
+        />
+        <Stack.Screen
+          name="ClientStories"
+          component={Stories}
+          options={{
+            headerShown: true,
+            title: 'Client Stories',
+            headerBackVisible: true,
           }}
         />
       </Stack.Navigator>

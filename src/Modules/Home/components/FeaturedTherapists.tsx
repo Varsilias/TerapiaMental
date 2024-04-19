@@ -8,8 +8,10 @@ import {
   View,
 } from 'react-native';
 import {Colors, Fonts} from '../../../General/utils/constants';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationType} from '../../../Navigation/types/navigation';
 
-interface ItemProps {
+export interface ItemProps {
   name: string;
   category: string;
   profileImage: ImageProps;
@@ -17,6 +19,8 @@ interface ItemProps {
 }
 
 const FeaturedTherapists = () => {
+  const navigation = useNavigation<StackNavigationType>();
+
   const featuredTherapist: ItemProps[] = [
     {
       name: 'Adeola Eze',
@@ -48,6 +52,7 @@ const FeaturedTherapists = () => {
           </Text>
         </View>
         <TouchableOpacity
+          onPress={() => navigation.navigate('Browse Therapist')}
           // eslint-disable-next-line react-native/no-inline-styles
           style={{flexDirection: 'row', marginTop: 10}}
           activeOpacity={0.8}>
@@ -70,7 +75,7 @@ const FeaturedTherapists = () => {
   );
 };
 
-const Item = ({name, category, profileImage, rating}: ItemProps) => (
+export const Item = ({name, category, profileImage, rating}: ItemProps) => (
   <TouchableOpacity style={styles.item} activeOpacity={0.8}>
     <Image source={profileImage} style={styles.image} />
     <View style={styles.title}>

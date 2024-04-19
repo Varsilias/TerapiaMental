@@ -6,10 +6,11 @@ import React, {PropsWithChildren} from 'react';
 export const DropShadow = ({
   children,
   shadowDistance,
-}: PropsWithChildren<{shadowDistance?: number}>) => {
+  style,
+}: PropsWithChildren<{shadowDistance?: number; style?: any}>) => {
   return (
     <Shadow
-      containerStyle={styles.shadowContainer}
+      containerStyle={[styles.shadowContainer, style]}
       stretch={true}
       distance={shadowDistance}>
       {children}

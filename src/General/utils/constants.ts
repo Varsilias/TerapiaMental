@@ -7,6 +7,7 @@ export const Fonts = {
   N_SEMI_BOLD: 'Nunito-SemiBold',
   N_BOLD: 'Nunito-Bold',
   N_REGULAR: 'Nunito-Regular',
+  N_MEDIUM: 'Nunito-Medium',
   N_BLACK: 'Nunito-Regular',
   N_EXTRA_BOLD_ITALIC: 'Nunito-ExtraBoldItalic',
 };

@@ -9,8 +9,10 @@ import {
 } from 'react-native';
 import {Colors, Fonts} from '../../../General/utils/constants';
 import {DropShadow} from '../../../General/components/DropShadow';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationType} from '../../../Navigation/types/navigation';
 
-interface ItemProps {
+export interface ItemProps {
   name: string;
   location: string;
   profileImage: ImageProps;
@@ -18,6 +20,7 @@ interface ItemProps {
 }
 
 const FeaturedStories = () => {
+  const navigation = useNavigation<StackNavigationType>();
   const featuredTherapist: ItemProps[] = [
     {
       name: 'Sarah Johnson',
@@ -51,6 +54,7 @@ const FeaturedStories = () => {
         <TouchableOpacity
           // eslint-disable-next-line react-native/no-inline-styles
           style={{flexDirection: 'row', marginTop: 10}}
+          onPress={() => navigation.navigate('ClientStories')}
           activeOpacity={0.8}>
           <Text style={styles.seeAll}>See all</Text>
           <Image source={require('../../../images/ArrowRightIcon.png')} />
@@ -71,7 +75,7 @@ const FeaturedStories = () => {
   );
 };
 
-const Item = ({name, location, profileImage, text}: ItemProps) => (
+export const Item = ({name, location, profileImage, text}: ItemProps) => (
   <DropShadow>
     <View style={styles.item}>
       <Image source={profileImage} style={styles.image} />
