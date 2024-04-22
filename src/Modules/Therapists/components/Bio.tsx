@@ -16,9 +16,9 @@ const Bio = () => {
   const navigation = useNavigation<StackNavigationType>();
 
   const summary = [
-    {title: 'Patients', value: '50+'},
-    {title: 'Experience', value: '4 years'},
-    {title: 'Rating', value: '4.7'},
+    {title: 'Patients', value: '50+', id: 1},
+    {title: 'Experience', value: '4 years', id: 2},
+    {title: 'Rating', value: '4.7', id: 3},
   ];
 
   const specialties = [
@@ -33,8 +33,16 @@ const Bio = () => {
       <View style={styles.container}>
         <Text style={styles.headerText}>About</Text>
         <View style={styles.itemContainer}>
-          {summary.map(({title, value}, index) => {
-            return <BioSummaryItem title={title} value={value} index={index} />;
+          {summary.map(({title, value, id}, index) => {
+            return (
+              <BioSummaryItem
+                title={title}
+                value={value}
+                index={index}
+                itemKey={id}
+                key={id}
+              />
+            );
           })}
         </View>
         {/* eslint-disable-next-line react-native/no-inline-styles */}
@@ -49,14 +57,22 @@ const Bio = () => {
             therapy sessions that address their unique needs and goals.
           </Text>
         </View>
+
         <View>
           <Text style={styles.headerText}>Specialities</Text>
         </View>
         <View style={styles.specialtiesContainer}>
-          {specialties.map(title => {
-            return <SpecialtiesItem title={title} />;
+          {specialties.map((title, index) => {
+            return (
+              <SpecialtiesItem
+                title={title}
+                itemKey={`${title}_${index}`}
+                key={`${title}_${index}`}
+              />
+            );
           })}
         </View>
+
         <View style={styles.bookAgainContainer}>
           <TouchableOpacity
             style={[styles.bookAgainBtn]}
@@ -67,7 +83,7 @@ const Bio = () => {
               style={{
                 color: Colors.WHITE,
                 fontFamily: Fonts.MEDIUM,
-                fontSize: 14,
+                fontSize: 19,
                 textAlign: 'center',
               }}>
               Book Session
@@ -82,17 +98,19 @@ const Bio = () => {
 const BioSummaryItem = ({
   title,
   value,
+  itemKey,
   index,
 }: {
   title: string;
   value: string;
+  itemKey: number | string;
   index: number;
 }) => {
   return (
     <View
       // eslint-disable-next-line react-native/no-inline-styles
       style={[styles.bioItemContainer, index === 2 && {marginRight: 0}]}
-      key={index}>
+      key={itemKey}>
       <Text style={styles.itemTitle}>{title}</Text>
       <View style={styles.itemValueContainer}>
         {index === 2 && (
@@ -107,9 +125,15 @@ const BioSummaryItem = ({
   );
 };
 
-const SpecialtiesItem = ({title}: {title: string}) => {
+const SpecialtiesItem = ({
+  title,
+  itemKey,
+}: {
+  title: string;
+  itemKey: string | number;
+}) => {
   return (
-    <View style={styles.specialtiesItem}>
+    <View style={styles.specialtiesItem} key={itemKey}>
       <Text style={styles.specialtiesText}>{title}</Text>
     </View>
   );

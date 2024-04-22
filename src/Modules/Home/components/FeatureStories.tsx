@@ -68,6 +68,7 @@ const FeaturedStories = () => {
             profileImage={item.profileImage}
             text={item.text}
             key={item.name}
+            itemKey={item.name}
           />
         ))}
       </View>
@@ -75,9 +76,15 @@ const FeaturedStories = () => {
   );
 };
 
-export const Item = ({name, location, profileImage, text}: ItemProps) => (
-  <DropShadow>
-    <View style={styles.item}>
+export const Item = ({
+  name,
+  location,
+  profileImage,
+  text,
+  itemKey,
+}: ItemProps & {itemKey: string | number}) => (
+  <DropShadow key={itemKey}>
+    <View style={styles.item} key={itemKey}>
       <Image source={profileImage} style={styles.image} />
       <Text style={styles.text}>{text}</Text>
       <Text style={styles.name}>{name}</Text>

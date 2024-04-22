@@ -27,13 +27,14 @@ const TherapistReviews = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {featuredTherapist.map(item => (
+        {featuredTherapist.map((item, index) => (
           <Item
             location={item.location}
             name={item.name}
             profileImage={item.profileImage}
             text={item.text}
-            key={item.name}
+            itemKey={item.name}
+            key={`${item.name}-${index}`}
           />
         ))}
       </View>
