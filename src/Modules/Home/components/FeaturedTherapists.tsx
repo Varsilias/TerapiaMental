@@ -75,20 +75,27 @@ const FeaturedTherapists = () => {
   );
 };
 
-export const Item = ({name, category, profileImage, rating}: ItemProps) => (
-  <TouchableOpacity style={styles.item} activeOpacity={0.8}>
-    <Image source={profileImage} style={styles.image} />
-    <View style={styles.title}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.category}>{category}</Text>
-    </View>
+export const Item = ({name, category, profileImage, rating}: ItemProps) => {
+  const navigation = useNavigation<StackNavigationType>();
 
-    <View style={styles.rating}>
-      <Image source={require('../../../images/RatingIcon.png')} />
-      <Text style={styles.ratingCount}>{rating}</Text>
-    </View>
-  </TouchableOpacity>
-);
+  return (
+    <TouchableOpacity
+      style={styles.item}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('TherapistProfile', {id: 1})}>
+      <Image source={profileImage} style={styles.image} />
+      <View style={styles.title}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.category}>{category}</Text>
+      </View>
+
+      <View style={styles.rating}>
+        <Image source={require('../../../images/RatingIcon.png')} />
+        <Text style={styles.ratingCount}>{rating}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -191,7 +191,7 @@ const Appointment = ({
               Cancel
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.bookBtn}>
+          <TouchableOpacity style={styles.bookBtn} activeOpacity={0.8}>
             <Text
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
@@ -205,7 +205,7 @@ const Appointment = ({
         </View>
       ) : (
         <View style={styles.bookAgainContainer}>
-          <TouchableOpacity style={[styles.bookAgainBtn]}>
+          <TouchableOpacity style={[styles.bookAgainBtn]} activeOpacity={0.8}>
             <Text
               // eslint-disable-next-line react-native/no-inline-styles
               style={{

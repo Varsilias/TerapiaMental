@@ -9,6 +9,8 @@ import TailoredTools from '../Modules/Home/components/TailoredTools';
 import RightTherapists from '../Modules/Home/components/RightTherapists';
 import {CommingSoon} from '../General/components/CommingSoon';
 import Stories from '../Modules/Home/components/Stories';
+import TherapistProfile from '../Modules/Therapists/components/Index';
+import BookSession from '../Modules/Therapists/components/BookSession';
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +79,8 @@ const StackNavigator = ({hasLaunched}: {hasLaunched: boolean}) => {
             headerBackVisible: true,
           }}
         />
+        <Stack.Screen name="TherapistProfile" component={TherapistProfile} />
+        <Stack.Screen name="BookSession" component={BookSession} />
       </Stack.Navigator>
     </>
   );
