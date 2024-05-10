@@ -1,88 +1,39 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Colors, Fonts} from '../../../General/utils/constants';
 import {ItemProps} from '../../Home/components/FeaturedTherapists';
 import TherapistList from './TherapistList';
 import AppointmentList from './AppointmentList';
+import {useGetTherapists} from '../hooks';
+import {handleError} from '../../../General/utils/helpers';
+import Toast from 'react-native-toast-message';
 
 const Therapy = () => {
   const [activeTab, setActiveTab] = useState(0);
   const tabs = [{title: 'Available Therapists'}, {title: 'My Appointments'}];
-  const therapists: ItemProps[] = [
-    {
-      name: 'Adeola Eze',
-      category: 'Clinical Psychologist',
-      profileImage: require('../../../images/fimage3.png'),
-      rating: 4.9,
-    },
-    {
-      name: 'Chinedu Okoye',
-      category: 'Marriage and Family Therapist',
-      profileImage: require('../../../images/fimage2.png'),
-      rating: 4.8,
-    },
-    {
-      name: 'Fatima Ibrahim',
-      category: 'Trauma Counselor',
-      profileImage: require('../../../images/fimage1.png'),
-      rating: 4.7,
-    },
+  const [therapists, setTherapist] = useState<Array<ItemProps>>([]);
 
-    {
-      name: 'Adeola Eze',
-      category: 'Clinical Psychologist',
-      profileImage: require('../../../images/fimage3.png'),
-      rating: 4.6,
+  const {mutate: getFeaturedTherapist} = useGetTherapists({
+    onSuccess(res) {
+      const data = res?.data;
+      console.log(JSON.stringify(data, null, 2));
+      setTherapist(data);
     },
-    {
-      name: 'Chinedu Okoye',
-      category: 'Marriage and Family Therapist',
-      profileImage: require('../../../images/fimage2.png'),
-      rating: 4.5,
+    onError(error: any) {
+      console.log(error);
+
+      handleError(error, message => {
+        console.log(message);
+        Toast.show({type: 'error', text1: 'Error', text2: message});
+      });
     },
-    {
-      name: 'Fatima Ibrahim',
-      category: 'Trauma Counselor',
-      profileImage: require('../../../images/fimage1.png'),
-      rating: 4.4,
-    },
-    {
-      name: 'Adeola Eze',
-      category: 'Clinical Psychologist',
-      profileImage: require('../../../images/fimage3.png'),
-      rating: 4.3,
-    },
-    {
-      name: 'Chinedu Okoye',
-      category: 'Marriage and Family Therapist',
-      profileImage: require('../../../images/fimage2.png'),
-      rating: 4.2,
-    },
-    {
-      name: 'Fatima Ibrahim',
-      category: 'Trauma Counselor',
-      profileImage: require('../../../images/fimage1.png'),
-      rating: 4.1,
-    },
-    {
-      name: 'Adeola Eze',
-      category: 'Clinical Psychologist',
-      profileImage: require('../../../images/fimage3.png'),
-      rating: 4.0,
-    },
-    {
-      name: 'Chinedu Okoye',
-      category: 'Marriage and Family Therapist',
-      profileImage: require('../../../images/fimage2.png'),
-      rating: 3.9,
-    },
-    {
-      name: 'Fatima Ibrahim',
-      category: 'Trauma Counselor',
-      profileImage: require('../../../images/fimage1.png'),
-      rating: 3.8,
-    },
-  ];
+  });
+
+  useEffect(() => {
+    getFeaturedTherapist({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.tabs}>

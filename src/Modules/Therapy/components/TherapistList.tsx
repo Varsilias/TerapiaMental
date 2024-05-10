@@ -7,8 +7,16 @@ const TherapistList = ({therapists}: {therapists: ItemProps[]}) => {
     <View style={styles.container}>
       <FlatList
         data={therapists}
-        renderItem={({item}) => <Item {...item} />}
-        keyExtractor={item => item.rating as string}
+        renderItem={({item}) => (
+          <Item
+            category={item.category}
+            name={`${item.firstname} ${item.lastname}`}
+            profileImage={{uri: item.profile_image}}
+            rating={item.rating}
+            id={item.id}
+          />
+        )}
+        keyExtractor={item => `${item.firstname}-${item.profile_image}`}
       />
     </View>
   );

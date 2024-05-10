@@ -27,7 +27,6 @@ export const FormikTextInput = ({
   icon,
   onIconClick,
   onPress,
-  onChange,
   ...props
 }: TextInputProps & Props) => {
   const [field, meta] = useField(name as string);
@@ -46,7 +45,7 @@ export const FormikTextInput = ({
                 ...props.inputStyles,
               },
         ]}
-        onChangeText={() => onChange ?? field.onChange(name)}
+        onChangeText={field.onChange(name)}
         onBlur={field.onBlur(name)}
         value={field.value}
         {...props}

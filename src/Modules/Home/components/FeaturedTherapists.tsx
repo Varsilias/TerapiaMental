@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
-  ImageProps,
+  // ImageProps,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,37 +10,49 @@ import {
 import {Colors, Fonts} from '../../../General/utils/constants';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationType} from '../../../Navigation/types/navigation';
+import Toast from 'react-native-toast-message';
+import {handleError} from '../../../General/utils/helpers';
+import {useGetFeaturedTherapists} from '../hooks';
 
 export interface ItemProps {
   name: string;
+  firstname?: string;
+  lastname?: string;
   category: string;
-  profileImage: ImageProps;
+  profileImage?: any;
+  // profileImage?: ImageProps | {uri: string};
+  profile_image?: any;
+  // profile_image?: ImageProps | {uri: string};
   rating: number | string;
+  id?: any;
 }
 
 const FeaturedTherapists = () => {
   const navigation = useNavigation<StackNavigationType>();
+  const [featuredTherapist, setFeaturedTherapist] = useState<Array<ItemProps>>(
+    [],
+  );
 
-  const featuredTherapist: ItemProps[] = [
-    {
-      name: 'Adeola Eze',
-      category: 'Clinical Psychologist',
-      profileImage: require('../../../images/fimage3.png'),
-      rating: 4.9,
+  const {mutate: getFeaturedTherapist} = useGetFeaturedTherapists({
+    onSuccess(res) {
+      const data = res?.data;
+      console.log(JSON.stringify(data, null, 2));
+      setFeaturedTherapist(data);
     },
-    {
-      name: 'Chinedu Okoye',
-      category: 'Marriage and Family Therapist',
-      profileImage: require('../../../images/fimage2.png'),
-      rating: 4.8,
+    onError(error: any) {
+      console.log(error);
+
+      handleError(error, message => {
+        console.log(message);
+        Toast.show({type: 'error', text1: 'Error', text2: message});
+      });
     },
-    {
-      name: 'Fatima Ibrahim',
-      category: 'Trauma Counselor',
-      profileImage: require('../../../images/fimage1.png'),
-      rating: 4.7,
-    },
-  ];
+  });
+
+  useEffect(() => {
+    getFeaturedTherapist({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -64,10 +76,11 @@ const FeaturedTherapists = () => {
         {featuredTherapist.map(item => (
           <Item
             category={item.category}
-            name={item.name}
-            profileImage={item.profileImage}
+            name={`${item.firstname} ${item.lastname}`}
+            profileImage={{uri: item.profile_image}}
             rating={item.rating}
-            key={item.name}
+            key={`${item.firstname}-${item.category}`}
+            id={item.id}
           />
         ))}
       </View>
@@ -75,14 +88,20 @@ const FeaturedTherapists = () => {
   );
 };
 
-export const Item = ({name, category, profileImage, rating}: ItemProps) => {
+export const Item = ({
+  name,
+  category,
+  profileImage,
+  rating,
+  ...rest
+}: ItemProps) => {
   const navigation = useNavigation<StackNavigationType>();
 
   return (
     <TouchableOpacity
       style={styles.item}
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('TherapistProfile', {id: 1})}>
+      onPress={() => navigation.navigate('TherapistProfile', {id: rest.id})}>
       <Image source={profileImage} style={styles.image} />
       <View style={styles.title}>
         <Text style={styles.name}>{name}</Text>

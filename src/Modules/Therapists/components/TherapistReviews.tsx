@@ -1,40 +1,46 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Item, ItemProps} from '../../Home/components/FeatureStories';
 import {Colors} from '../../../General/utils/constants';
+import Toast from 'react-native-toast-message';
+import {handleError} from '../../../General/utils/helpers';
+import {useGetReviews} from '../../Therapy/hooks';
 
 const TherapistReviews = () => {
-  const featuredTherapist: ItemProps[] = [
-    {
-      name: 'Sarah Johnson',
-      location: 'Lagos, Nigeria',
-      profileImage: require('../../../images/fimage3.png'),
-      text: "I've struggled with anxiety for years, but TerapiaMental has been a lifesaver. The therapists are incredible, and the tools provided have helped me manage my symptoms better than ever before. Highly recommend!",
+  const [stories, setStories] = useState<ItemProps[]>([]);
+
+  const {mutate: getReviews} = useGetReviews({
+    onSuccess(res) {
+      const data = res?.data;
+      console.log(JSON.stringify(data, null, 2));
+      setStories(data);
     },
-    {
-      name: 'Ahmed Abdullahi',
-      location: 'Abuja, Nigeria',
-      profileImage: require('../../../images/fimage2.png'),
-      text: 'As a busy professional, finding time for therapy was challenging. TerapiaMental made it easy. The wallet feature streamlined payments, and the therapist I connected with truly understood my needs. Great app!',
+    onError(error: any) {
+      console.log(error);
+
+      handleError(error, message => {
+        console.log(message);
+        Toast.show({type: 'error', text1: 'Error', text2: message});
+      });
     },
-    {
-      name: 'David Okonkwo',
-      location: 'Port Harcourt, Nigeria',
-      profileImage: require('../../../images/fimage1.png'),
-      text: "I've tried other therapy apps, but TerapiaMental stands out. The therapist matching process was spot on, and the resources available have been invaluable on my mental health journey. Thank you for creating such a fantastic app!",
-    },
-  ];
+  });
+
+  useEffect(() => {
+    getReviews({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        {featuredTherapist.map((item, index) => (
+        {stories.map(item => (
           <Item
             location={item.location}
             name={item.name}
-            profileImage={item.profileImage}
-            text={item.text}
-            itemKey={item.name}
-            key={`${item.name}-${index}`}
+            profileImage={{uri: item.profile_image}}
+            text={item.review}
+            key={item.review}
+            itemKey={`${item.review}`}
           />
         ))}
       </View>

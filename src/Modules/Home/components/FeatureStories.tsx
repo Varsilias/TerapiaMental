@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
-  ImageProps,
+  // ImageProps,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,36 +11,44 @@ import {Colors, Fonts} from '../../../General/utils/constants';
 import {DropShadow} from '../../../General/components/DropShadow';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationType} from '../../../Navigation/types/navigation';
+import {useGetFeaturedReviews} from '../hooks';
+import {handleError} from '../../../General/utils/helpers';
+import Toast from 'react-native-toast-message';
 
 export interface ItemProps {
   name: string;
   location: string;
-  profileImage: ImageProps;
-  text: string;
+  // profileImage: ImageProps;
+  profileImage: any;
+  text: any;
+  review?: string;
+  profile_image?: any;
 }
 
 const FeaturedStories = () => {
   const navigation = useNavigation<StackNavigationType>();
-  const featuredTherapist: ItemProps[] = [
-    {
-      name: 'Sarah Johnson',
-      location: 'Lagos, Nigeria',
-      profileImage: require('../../../images/fimage3.png'),
-      text: "I've struggled with anxiety for years, but TerapiaMental has been a lifesaver. The therapists are incredible, and the tools provided have helped me manage my symptoms better than ever before. Highly recommend!",
+  const [stories, setStories] = useState<ItemProps[]>([]);
+
+  const {mutate: getFeaturedReviews} = useGetFeaturedReviews({
+    onSuccess(res) {
+      const data = res?.data;
+      console.log(JSON.stringify(data, null, 2));
+      setStories(data);
     },
-    {
-      name: 'Ahmed Abdullahi',
-      location: 'Abuja, Nigeria',
-      profileImage: require('../../../images/fimage2.png'),
-      text: 'As a busy professional, finding time for therapy was challenging. TerapiaMental made it easy. The wallet feature streamlined payments, and the therapist I connected with truly understood my needs. Great app!',
+    onError(error: any) {
+      console.log(error);
+
+      handleError(error, message => {
+        console.log(message);
+        Toast.show({type: 'error', text1: 'Error', text2: message});
+      });
     },
-    {
-      name: 'David Okonkwo',
-      location: 'Port Harcourt, Nigeria',
-      profileImage: require('../../../images/fimage1.png'),
-      text: "I've tried other therapy apps, but TerapiaMental stands out. The therapist matching process was spot on, and the resources available have been invaluable on my mental health journey. Thank you for creating such a fantastic app!",
-    },
-  ];
+  });
+
+  useEffect(() => {
+    getFeaturedReviews({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -61,14 +69,14 @@ const FeaturedStories = () => {
         </TouchableOpacity>
       </View>
       <View>
-        {featuredTherapist.map(item => (
+        {stories.map(item => (
           <Item
             location={item.location}
             name={item.name}
-            profileImage={item.profileImage}
-            text={item.text}
-            key={item.name}
-            itemKey={item.name}
+            profileImage={{uri: item.profile_image}}
+            text={item.review}
+            key={item.review}
+            itemKey={`${item.review}`}
           />
         ))}
       </View>
@@ -128,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 55,
     alignItems: 'center',
     borderRadius: 5,
-    height: 225,
+    height: 250,
     position: 'relative',
   },
   image: {
